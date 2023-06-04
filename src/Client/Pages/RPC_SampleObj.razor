@@ -1,0 +1,94 @@
+﻿@page "/rpc_sampleobj"
+@using RPCSharp.Shared.Entities
+@using RPCSharp.Shared.QueryBuilders
+@using RPCSharp.Shared.Queries
+
+
+@inject HttpClient Http
+
+<h3>RPC_SampleObj</h3>
+
+@if (!_objects.Any())
+{
+    <p><em>No Results...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in _objects)
+            {
+                <tr>
+                    <td>@obj.Id</td>
+                    <td>@obj.Name</td>
+                    <td>@obj.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div class="row">
+    <div class="col col-1">
+        <input name="toggle_retain" type="checkbox" class="form-check" @bind-value=_retainValues @onclick=ToggleRetainValues/>
+    </div>
+    <div class="col">
+        <label for="toggle_retain">Retain Filter Values</label>
+    </div>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>select all</label>
+        <button type="submit" @onclick=OnSelectAll>Select</button>
+    </EditForm>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>select by id</label>
+        <InputNumber @bind-Value=_queryModel.Id />
+        <button type="submit" @onclick=OnSelectId>Select</button>
+    </EditForm>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>select by name</label>
+        <InputText @bind-Value=_queryModel.Name />
+        <button type="submit" @onclick=OnSelectName>Select</button>
+    </EditForm>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>select by value</label>
+        <InputNumber @bind-Value=_queryModel.Value />
+        <button type="submit" @onclick=OnSelectByValue>Select</button>
+    </EditForm>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>select greater than value</label>
+        <InputNumber @bind-Value=_queryModel.GT_Value />
+        <button type="submit" @onclick=OnSelectGreaterThan>Select</button>
+    </EditForm>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>select less than value</label>
+        <InputNumber @bind-Value=_queryModel.LT_Value />
+        <button type="submit" @onclick=OnSelectLessThan>Select</button>
+    </EditForm>
+</div>
+<div class="row">
+    <EditForm Model=_queryModel>
+        <label>greater than</label>
+        <InputNumber @bind-Value=_queryModel.GT_Value />
+        <label>less than</label>
+        <InputNumber @bind-Value=_queryModel.LT_Value />
+        <button type="submit" @onclick=OnSelectRange>Select</button>
+    </EditForm>
+</div>
